@@ -636,7 +636,7 @@ public class SteemJConfig {
 	 * Return the current default beneficiary account. (Defaults to
 	 * {@link #getSteemJAccount})
 	 * 
-	 * @return
+	 * @return The currently configured beneficiary account.
 	 */
 	public AccountName getBeneficiaryAccount() {
 		return beneficiaryAccount;
@@ -646,7 +646,7 @@ public class SteemJConfig {
 	 * Set a new default beneficiary account. If you don't want any beneficiary
 	 * being set, use {@link #setSteemJWeight} and set the weight to 0}.
 	 * 
-	 * @param beneficiaryAccount
+	 * @param beneficiaryAccount The beneficiary account to set.
 	 */
 	public void setBeneficiaryAccount(AccountName beneficiaryAccount) {
 		this.beneficiaryAccount = beneficiaryAccount;
