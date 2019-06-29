@@ -45,25 +45,25 @@ public class ExtendedAccount extends Account {
     private Asset vestingBalance;
     // Original type is "share_type" which is a "safe<int64_t>".
     private long reputation;
-    // The original tpye is map<uint64_t,applied_operation>
+    // The original type is map<uint64_t,applied_operation>
     /** Transfer to/from vesting. */
     @JsonProperty("transfer_history")
     @JsonDeserialize(using = OperationHistoryHashMapDeserializer.class)
     private Map<BigInteger, AppliedOperation> transferHistory;
-    // The original tpye is map<uint64_t,applied_operation>
+    // The original type is map<uint64_t,applied_operation>
     /** Limit order / cancel / fill. */
     @JsonProperty("market_history")
     @JsonDeserialize(using = OperationHistoryHashMapDeserializer.class)
     private Map<BigInteger, AppliedOperation> marketHistory;
-    // The original tpye is map<uint64_t,applied_operation>
+    // The original type is map<uint64_t,applied_operation>
     @JsonProperty("post_history")
     @JsonDeserialize(using = OperationHistoryHashMapDeserializer.class)
     private Map<BigInteger, AppliedOperation> postHistory;
-    // The original tpye is map<uint64_t,applied_operation>
+    // The original type is map<uint64_t,applied_operation>
     @JsonProperty("vote_history")
     @JsonDeserialize(using = OperationHistoryHashMapDeserializer.class)
     private Map<BigInteger, AppliedOperation> voteHistory;
-    // The original tpye is map<uint64_t,applied_operation>
+    // The original type is map<uint64_t,applied_operation>
     @JsonProperty("other_history")
     @JsonDeserialize(using = OperationHistoryHashMapDeserializer.class)
     private Map<BigInteger, AppliedOperation> otherHistory;
@@ -98,7 +98,7 @@ public class ExtendedAccount extends Account {
     @JsonProperty("recent_replies")
     private List<String> recentReplies;
     // Original type is "optional<vector<string>>".
-    /** Posts recommened for this user. */
+    /** Posts recommended for this user. */
     @JsonProperty("recommended")
     private List<String> recommended;
 
