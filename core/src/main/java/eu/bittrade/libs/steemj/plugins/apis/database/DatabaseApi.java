@@ -168,8 +168,10 @@ public class DatabaseApi {
      */
     public static DynamicGlobalProperty getDynamicGlobalProperties(CommunicationHandler communicationHandler)
             throws SteemCommunicationException, SteemResponseException {
-        JsonRPCRequest requestObject = new JsonRPCRequest(SteemApiType.DATABASE_API,
-                RequestMethod.GET_DYNAMIC_GLOBAL_PROPERTIES, null);
+    	
+    //	JsonRPCRequest requestObject = new JsonRPCRequest(SteemApiType.DATABASE_API,
+    //            RequestMethod.GET_DYNAMIC_GLOBAL_PROPERTIES, null);
+    	JsonRPCRequest requestObject = new JsonRPCRequest(SteemApiType.DATABASE_API, RequestMethod.GET_DYNAMIC_GLOBAL_PROPERTIES);
 
         return communicationHandler.performRequest(requestObject, DynamicGlobalProperty.class).get(0);
     }

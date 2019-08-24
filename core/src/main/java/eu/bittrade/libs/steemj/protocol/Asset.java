@@ -47,7 +47,8 @@ public class Asset implements ByteTransformable {
     // Original type is "share_type" which is a "safe<int64_t>".
     private long amount;
     // Type us uint64_t in the original code.
-    private AssetSymbolType symbol;
+   // private AssetSymbolType symbol;
+    private String nai;
     private byte precision;
 
     /**
@@ -55,28 +56,33 @@ public class Asset implements ByteTransformable {
      * 
      * @param amount
      *            The amount.
-     * @param symbol
+     * @param nai
      *            One type of
      *            {@link eu.bittrade.libs.steemj.protocol.enums.AssetSymbolType
      *            AssetSymbolType}.
      */
-    public Asset(BigDecimal amount, AssetSymbolType symbol) {
-        this.setSymbol(symbol);
+    public Asset(BigDecimal amount, String nai) {
+        this.setNai(nai);
         this.setAmount(amount);
     }
 
-    /**
+    private void setNai(String nai) {
+		this.nai = nai;
+		
+	}
+
+	/**
      * Create a new asset object by providing all required fields.
      * 
      * @param amount
      *            The amount.
-     * @param symbol
+     * @param nai
      *            One type of
      *            {@link eu.bittrade.libs.steemj.protocol.enums.AssetSymbolType
      *            AssetSymbolType}.
      */
-    public Asset(long amount, AssetSymbolType symbol) {
-        this.setSymbol(symbol);
+    public Asset(long amount, String nai) {
+        this.setNai(nai);
         this.setAmount(amount);
     }
 
@@ -104,8 +110,8 @@ public class Asset implements ByteTransformable {
      * @return One type of {@link eu.bittrade.libs.steemj.protocol.enums.AssetSymbolType
      *         AssetSymbolType}.
      */
-    public AssetSymbolType getSymbol() {
-        return symbol;
+    public String getNai() {
+        return nai;
     }
 
     /**
@@ -127,8 +133,7 @@ public class Asset implements ByteTransformable {
     public void setAmount(BigDecimal amount) {
         if (amount.scale() > this.getPrecision()) {
             throw new InvalidParameterException("The provided 'amount' has a 'scale' of " + amount.scale()
-                    + ", but needs to have a 'scale' of " + this.getPrecision() + " when " + this.getSymbol().name()
-                    + " is used as a AssetSymbolType.");
+                    + ", but needs to have a 'scale' of " + this.getPrecision());
         }
 
         this.amount = amount.multiply(BigDecimal.valueOf(Math.pow(10, this.getPrecision()))).longValue();
@@ -142,7 +147,7 @@ public class Asset implements ByteTransformable {
      *            {@link eu.bittrade.libs.steemj.protocol.enums.AssetSymbolType
      *            AssetSymbolType}.
      */
-    public void setSymbol(AssetSymbolType symbol) {
+   /* public void setSymbol(AssetSymbolType symbol) {
         if (symbol.equals(AssetSymbolType.VESTS)) {
             this.precision = 6;
         } else {
@@ -150,7 +155,7 @@ public class Asset implements ByteTransformable {
         }
 
         this.symbol = symbol;
-    }
+    } */
 
     /**
      * Transform this asset into its {@link BigDecimal} representation.
@@ -167,14 +172,14 @@ public class Asset implements ByteTransformable {
         try (ByteArrayOutputStream serializedAsset = new ByteArrayOutputStream()) {
             serializedAsset.write(SteemJUtils.transformLongToByteArray(this.amount));
             serializedAsset.write(SteemJUtils.transformByteToLittleEndian(this.precision));
-
-            serializedAsset
+            serializedAsset.write(this.nai.getBytes());
+         /*   serializedAsset
                     .write(this.symbol.name().toUpperCase().getBytes(SteemJConfig.getInstance().getEncodingCharset()));
             String filledAssetSymbol = this.symbol.name().toUpperCase();
 
             for (int i = filledAssetSymbol.length(); i < 7; i++) {
                 serializedAsset.write(0x00);
-            }
+            }*/
 
             return serializedAsset.toByteArray();
         } catch (IOException e) {
@@ -195,7 +200,7 @@ public class Asset implements ByteTransformable {
         if (otherAsset == null || !(otherAsset instanceof Asset))
             return false;
         Asset other = (Asset) otherAsset;
-        return (this.getAmount().equals(other.getAmount()) && this.getSymbol().equals(other.getSymbol())
+        return (this.getAmount().equals(other.getAmount()) && this.getNai().equals(other.getNai())
                 && this.getPrecision().equals(other.getPrecision()));
     }
 
@@ -203,7 +208,7 @@ public class Asset implements ByteTransformable {
     public int hashCode() {
         int hashCode = 1;
         hashCode = 31 * hashCode + (this.getAmount() == null ? 0 : this.getAmount().hashCode());
-        hashCode = 31 * hashCode + (this.getSymbol() == null ? 0 : this.getSymbol().hashCode());
+        hashCode = 31 * hashCode + (this.getNai() == null ? 0 : this.getNai().hashCode());
         hashCode = 31 * hashCode + (this.getPrecision() == null ? 0 : this.getPrecision().hashCode());
         return hashCode;
     }

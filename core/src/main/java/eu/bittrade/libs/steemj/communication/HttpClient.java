@@ -51,8 +51,10 @@ public class HttpClient extends AbstractClient {
             if (sslVerificationDisabled && endpointUri.getScheme().equals("https")) {
                 builder.doNotValidateCertificate();
             }
-
-            String requestPayload = requestObject.toJson();
+            
+            String requestPayload = requestObject.toJson().substring(0, requestObject.toJson().lastIndexOf(',')) + "}";
+            
+            
             HttpRequest httpRequest = builder.build().createRequestFactory(new HttpClientRequestInitializer())
                     .buildPostRequest(new GenericUrl(endpointUri),
                             ByteArrayContent.fromString("application/json", requestPayload));

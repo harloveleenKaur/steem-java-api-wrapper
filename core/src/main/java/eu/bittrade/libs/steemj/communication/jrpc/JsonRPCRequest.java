@@ -34,7 +34,7 @@ import eu.bittrade.libs.steemj.enums.SteemApiType;
  * 
  * @author <a href="http://steemit.com/@dez1337">dez1337</a>
  */
-@JsonPropertyOrder({ "jsonrpc", "method", "params", "id" })
+@JsonPropertyOrder({ "jsonrpc", "method", "id" })
 public class JsonRPCRequest {
     /** A shared <code>Random</code> instance. */
     private static Random randomGenerator = new Random();
@@ -68,7 +68,15 @@ public class JsonRPCRequest {
         this.params = params;
     }
 
-    /**
+    public JsonRPCRequest(@Nullable SteemApiType steemApiType, RequestMethod requestMethod) {
+        String namespaceAndMethod = "";
+        if (steemApiType != null) {
+            namespaceAndMethod = steemApiType.name().toLowerCase() + ".";
+        }
+        this.method = namespaceAndMethod + requestMethod.name().toLowerCase();
+    }
+
+	/**
      * Get the json-rpc version.
      * 
      * @return The used json-rpc version.
